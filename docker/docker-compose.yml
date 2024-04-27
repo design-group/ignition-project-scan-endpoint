@@ -1,0 +1,29 @@
+services:
+  gateway:
+    image: bwdesigngroup/ignition-docker:8.1.37
+    environment:
+      DEVELOPER_MODE: Y
+      SYMLINK_GITIGNORE: false
+      SYMLINK_THEMES: false
+      SYMLINK_LOGBACK: false
+      GATEWAY_SYSTEM_NAME: project-scan
+      GATEWAY_PUBLIC_HTTPS_PORT: 443
+      GATEWAY_PUBLIC_ADDRESS: project-scan.localtest.me
+    volumes:
+      - ../build/Project-Scan-Endpoint.modl:/modules/Project-Scan-Endpoint.modl
+      - ./backups/gateway.gwbk:/restore.gwbk
+      - ./temp/ignition-data:/workdir
+    labels:
+      traefik.enable: "true"
+      traefik.hostname: "project-scan"
+    command: >
+      -r /restore.gwbk
+    networks:
+      - default
+      - proxy
+    
+networks:
+  default:
+  proxy:
+    external: true
+    name: proxy
