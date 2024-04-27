@@ -13,5 +13,7 @@ rootProject.name = "project-scan"
 
 include(
 ":",
-    ":gateway"
+    ":gateway",
+	":designer",
+	":common",
 )

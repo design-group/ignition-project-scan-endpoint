@@ -42,7 +42,9 @@ ignitionModule {
      *  Example entry: [ ":gateway": "G", ":common": "GC", ":vision-client": "C" ]
      */
     projectScopes = [
-        ":gateway" : "G"
+        ":gateway" : "G",
+		":designer" : "D",
+		":common" : "GD"
     ]
 
     /*
@@ -63,7 +65,8 @@ ignitionModule {
      * Example entry: "com.myorganization.vectorizer.VectorizerDesignerHook": "D"
      */
     hooks = [
-        "com.bwdesigngroup.ignition.project_scan.gateway.ProjectScanEndpointGatewayHook" : "G"
+        "com.bwdesigngroup.ignition.project_scan.gateway.ProjectScanEndpointGatewayHook" : "G",
+		"com.bwdesigngroup.ignition.project_scan.designer.ProjectScanEndpointDesignerHook" : "D"
     ]
 
     applyInductiveArtifactRepo = true

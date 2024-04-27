@@ -21,12 +21,14 @@ import com.inductiveautomation.ignition.gateway.web.models.IConfigTab;
 import com.inductiveautomation.ignition.gateway.web.pages.config.overviewmeta.ConfigOverviewContributor;
 import com.inductiveautomation.ignition.gateway.web.pages.status.overviewmeta.OverviewContributor;
 
+import com.bwdesigngroup.ignition.project_scan.common.ProjectScanConstants;
+
 /**
  * Class which is instantiated by the Ignition platform when the module is loaded in the gateway scope.
  */
 public class ProjectScanEndpointGatewayHook extends AbstractGatewayModuleHook {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private final Logger logger = LoggerFactory.getLogger(ProjectScanConstants.MODULE_ID + ".gateway");
 	public static GatewayContext context;
 
     /**

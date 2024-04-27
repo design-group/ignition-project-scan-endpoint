@@ -14,9 +14,13 @@ import com.inductiveautomation.ignition.gateway.dataroutes.RequestContext;
 import com.inductiveautomation.ignition.gateway.dataroutes.RouteGroup;
 import com.inductiveautomation.ignition.gateway.model.GatewayContext;
 import com.inductiveautomation.ignition.gateway.project.ProjectManager;
+import com.inductiveautomation.ignition.gateway.clientcomm.GatewaySessionManager;
+import com.inductiveautomation.ignition.common.model.ApplicationScope;
+
+import com.bwdesigngroup.ignition.project_scan.common.ProjectScanConstants;
 
 public class ProjectScanRoutes {
-	private static final Logger logger = LoggerFactory.getLogger(ProjectScanRoutes.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(ProjectScanConstants.MODULE_ID + ".projectScanRoutes");
 	private final RouteGroup routes;
 	private final GatewayContext gatewayContext;
 	private final ProjectManager projectManager;
@@ -56,7 +60,6 @@ public class ProjectScanRoutes {
 
 	public JsonObject confirmSupport(RequestContext requestContext,
 			HttpServletResponse httpServletResponse) throws JSONException {
-		logger.info("Confirming project scan support");
 		JsonObject response = new JsonObject();
 		response.addProperty("supported", true);
 		return response;
@@ -65,7 +68,28 @@ public class ProjectScanRoutes {
 	public JsonObject triggerProjectScan(RequestContext requestContext,
 			HttpServletResponse httpServletResponse) throws JSONException {
 		logger.info("Triggering project scan");
-		projectManager.requestScan();
-		return new JsonObject();
+		JsonObject response = new JsonObject();
+		
+		try {
+			projectManager.requestScan();
+			response.addProperty("gatewayProjectScanSuccess", true);
+		} catch (Exception e) {
+			logger.error("Error triggering project scan", e);
+			response.addProperty("gatewayProjectScanSuccess", false);
+		}
+		
+		String updateDesigner = requestContext.getParameter("updateDesigner");
+		if (updateDesigner != null && updateDesigner.equals("true")) {
+			logger.info("Updating designer");
+			GatewaySessionManager sessionManager = gatewayContext.getGatewaySessionManager();
+			try {
+				sessionManager.sendNotification(ApplicationScope.DESIGNER, ProjectScanConstants.MODULE_ID, ProjectScanConstants.DESIGNER_SCAN_NOTIFICATION_ID, null);
+				response.addProperty("sentDesignerUpdateNotification", true);
+			} catch (Exception e) {
+				logger.error("Error sending notification", e);
+				response.addProperty("sentDesignerUpdateNotification", false);
+			}
+		}
+		return response;
 	}
 }

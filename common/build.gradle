@@ -1,0 +1,6 @@
+plugins {
+    id "java-library"
+}
+
+sourceCompatibility = JavaVersion.VERSION_11  // Ensure this matches the JDK you are using
+targetCompatibility = JavaVersion.VERSION_11
