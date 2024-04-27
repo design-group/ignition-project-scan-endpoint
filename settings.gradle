@@ -1,0 +1,17 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+		mavenCentral()
+        maven {
+            url 'https://nexus.inductiveautomation.com/repository/public'
+        }
+    }
+}
+
+
+rootProject.name = "project-scan-endpoint"
+
+include(
+":",
+    ":gateway"
+)

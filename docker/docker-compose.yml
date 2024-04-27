@@ -9,6 +9,7 @@ services:
       GATEWAY_SYSTEM_NAME: project-scan
       GATEWAY_PUBLIC_HTTPS_PORT: 443
       GATEWAY_PUBLIC_ADDRESS: project-scan.localtest.me
+      PROJECT_SCAN_FREQUENCY: 0
     volumes:
       - ../build/Project-Scan-Endpoint.modl:/modules/Project-Scan-Endpoint.modl
       - ./backups/gateway.gwbk:/restore.gwbk
