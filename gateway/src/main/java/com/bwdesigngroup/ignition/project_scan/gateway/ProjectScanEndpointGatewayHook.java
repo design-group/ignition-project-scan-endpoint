@@ -2,16 +2,22 @@ package com.bwdesigngroup.ignition.project_scan.gateway;
 
 import java.util.List;
 import java.util.Optional;
+
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.bwdesigngroup.ignition.project_scan.gateway.web.routes.ProjectScanRoutes;
 import com.inductiveautomation.ignition.common.licensing.LicenseState;
+import com.inductiveautomation.ignition.common.project.resource.adapter.ResourceTypeAdapter;
 import com.inductiveautomation.ignition.common.project.resource.adapter.ResourceTypeAdapterRegistry;
 import com.inductiveautomation.ignition.gateway.dataroutes.RouteGroup;
 import com.inductiveautomation.ignition.gateway.model.AbstractGatewayModuleHook;
 import com.inductiveautomation.ignition.gateway.model.GatewayContext;
+import com.inductiveautomation.ignition.gateway.model.GatewayModuleHook;
 import com.inductiveautomation.ignition.gateway.web.models.ConfigCategory;
 import com.inductiveautomation.ignition.gateway.web.models.IConfigTab;
-import com.inductiveautomation.ignition.gateway.web.models.SystemMap;
 import com.inductiveautomation.ignition.gateway.web.pages.config.overviewmeta.ConfigOverviewContributor;
 import com.inductiveautomation.ignition.gateway.web.pages.status.overviewmeta.OverviewContributor;
 
@@ -19,6 +25,10 @@ import com.inductiveautomation.ignition.gateway.web.pages.status.overviewmeta.Ov
  * Class which is instantiated by the Ignition platform when the module is loaded in the gateway scope.
  */
 public class ProjectScanEndpointGatewayHook extends AbstractGatewayModuleHook {
+
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+	public static GatewayContext context;
+
     /**
      * Called to before startup. This is the chance for the module to add its extension points and update persistent
      * records and schemas. None of the managers will be started up at this point, but the extension point managers will
@@ -26,7 +36,8 @@ public class ProjectScanEndpointGatewayHook extends AbstractGatewayModuleHook {
      */
     @Override
     public void setup(GatewayContext context) {
-
+		logger.info("Setting up Project Scan Gateway Module");
+		ProjectScanEndpointGatewayHook.context = context;
     }
 
     /**
@@ -35,7 +46,7 @@ public class ProjectScanEndpointGatewayHook extends AbstractGatewayModuleHook {
      */
     @Override
     public void startup(LicenseState activationState) {
-
+		logger.info("Starting up Project Scan Gateway Module");
     }
 
     /**
@@ -44,7 +55,7 @@ public class ProjectScanEndpointGatewayHook extends AbstractGatewayModuleHook {
      */
     @Override
     public void shutdown() {
-
+		logger.info("Shutting down Project Scan Gateway Module");
     }
 
     /**
@@ -80,9 +91,9 @@ public class ProjectScanEndpointGatewayHook extends AbstractGatewayModuleHook {
      * <tt>/main/data/module-id/*</tt> See {@link RouteGroup} for details. Will be called after startup().
      */
     @Override
-    public void mountRouteHandlers(RouteGroup routes) {
-
-    }
+	public void mountRouteHandlers(RouteGroup routes) {
+		new ProjectScanRoutes(context, routes).mountRoutes();
+	}
 
     /**
      * Used by the mounting underneath /res/module-id/* and /main/data/module-id/* as an alternate mounting path instead
@@ -99,7 +110,7 @@ public class ProjectScanEndpointGatewayHook extends AbstractGatewayModuleHook {
      */
     @Override
     public boolean isFreeModule() {
-        return false;
+        return true;
     }
 
     /**

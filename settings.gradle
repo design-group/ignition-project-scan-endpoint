@@ -9,7 +9,7 @@ pluginManagement {
 }
 
 
-rootProject.name = "project-scan-endpoint"
+rootProject.name = "project-scan"
 
 include(
 ":",
