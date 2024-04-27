@@ -29,17 +29,37 @@ public class ProjectScanRoutes {
 
 	public void mountRoutes() {
 		/*
+		 * Confirm the gateway supports the project scan endpoint
+		 * This will be a GET request
+		 * 
+		 * Example Usage: curl http://localhost:8088/data/project-scan-endpoint/confirm-support
+		 * Response: {"supported":true}
+		 */
+		this.routes.newRoute("/confirm-support")
+				.handler(this::confirmSupport)
+				.type(TYPE_JSON)
+				.mount();
+
+		/*
 		 * Trigger a project scan
 		 * This will be a POST request, with nothing in the body
 		 * 
 		 * Example Usage: curl -X POST -H "Content-Type: application/json"
-		 * http://localhost:8088/data/project-scan/scan?
+		 * http://localhost:8088/data/project-scan-endpoint/scan?
 		 */
 		this.routes.newRoute("/scan")
 				.handler(this::triggerProjectScan)
 				.type(TYPE_JSON)
 				.method(POST)
 				.mount();
+	}
+
+	public JsonObject confirmSupport(RequestContext requestContext,
+			HttpServletResponse httpServletResponse) throws JSONException {
+		logger.info("Confirming project scan support");
+		JsonObject response = new JsonObject();
+		response.addProperty("supported", true);
+		return response;
 	}
 
 	public JsonObject triggerProjectScan(RequestContext requestContext,
