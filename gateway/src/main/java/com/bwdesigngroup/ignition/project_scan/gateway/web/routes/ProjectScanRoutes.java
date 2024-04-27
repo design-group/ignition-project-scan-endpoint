@@ -78,7 +78,7 @@ public class ProjectScanRoutes {
 			response.addProperty("gatewayProjectScanSuccess", false);
 		}
 		
-		String updateDesigner = requestContext.getParameter("updateDesigner");
+		String updateDesigner = requestContext.getParameter("updateDesigners");
 		if (updateDesigner != null && updateDesigner.equals("true")) {
 			logger.info("Updating designer");
 			GatewaySessionManager sessionManager = gatewayContext.getGatewaySessionManager();

@@ -10,10 +10,15 @@ This module provides a REST endpoint for triggering a project scan in Ignition. 
 
 This endpoint triggers a project scan when called.
 
+#### Parameters
+| Parameter | Description |
+| --------- | ----------- |
+| `updateDesigners` | A boolean value indicating whether the project scan should update open designers. If `true`, the designer information will be updated. |
+
 #### Example Usage
 
 ```sh
-curl -X POST -H "Content-Type: application/json" https://project-scan.localtest.me/data/project-scan-endpoint/scan
+curl -X POST -H "Content-Type: application/json" https://project-scan.localtest.me/data/project-scan-endpoint/scan?updateDesigners=true
 ```
 
 #### Response
