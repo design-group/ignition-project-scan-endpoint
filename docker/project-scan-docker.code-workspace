@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"ignitionFlint.sslVerify": false,
+		"ignitionFlint.composePaths": [
+			"docker-compose.yaml"
+		],
+		"ignitionFlint.ignitionGateways": [
+			{
+				"label": "project-scan",
+				"address": "https://project-scan.localtest.me",
+				"projectPaths": [
+					"temp/ignition-data/projects"
+				],
+				"updateDesignerOnSave": true,
+				"forceUpdateDesigner": true,
+				"supportsProjectScanEndpoint": true
+			}
+		]
+	}
+}
