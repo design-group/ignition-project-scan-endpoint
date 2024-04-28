@@ -71,7 +71,7 @@ public class ProjectScanRoutes {
     JsonObject response = new JsonObject();
     
     try {
-        projectManager.requestScan();
+    	projectManager.requestScan().get();
         response.addProperty("gatewayProjectScanSuccess", true);
     } catch (Exception e) {
         logger.error("Error triggering project scan", e);
