@@ -14,11 +14,12 @@ This endpoint triggers a project scan when called.
 | Parameter | Description |
 | --------- | ----------- |
 | `updateDesigners` | A boolean value indicating whether the project scan should update open designers. If `true`, the designer information will be updated. |
+| `forceUpdate` | A boolean value indicating whether the project scan should force an update. If `true`, and `updateDesigners` is `true`, the project scan will be forced in the Designer |
 
 #### Example Usage
 
 ```sh
-curl -X POST -H "Content-Type: application/json" https://project-scan.localtest.me/data/project-scan-endpoint/scan?updateDesigners=true
+curl -X POST -H "Content-Type: application/json" https://project-scan.localtest.me/data/project-scan-endpoint/scan?updateDesigners=true&forceUpdate=true
 ```
 
 #### Response
