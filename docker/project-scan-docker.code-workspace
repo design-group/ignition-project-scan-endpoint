@@ -17,7 +17,7 @@
 					"temp/ignition-data/projects"
 				],
 				"updateDesignerOnSave": true,
-				"forceUpdateDesigner": true,
+				"forceUpdateDesigner": false,
 				"supportsProjectScanEndpoint": true
 			}
 		]

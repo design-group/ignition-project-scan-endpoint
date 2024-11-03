@@ -36,7 +36,8 @@ public class ProjectScanRoutes {
 		 * Confirm the gateway supports the project scan endpoint
 		 * This will be a GET request
 		 * 
-		 * Example Usage: curl http://localhost:8088/data/project-scan-endpoint/confirm-support
+		 * Example Usage: curl
+		 * http://localhost:8088/data/project-scan-endpoint/confirm-support
 		 * Response: {"supported":true}
 		 */
 		this.routes.newRoute("/confirm-support")
@@ -66,33 +67,36 @@ public class ProjectScanRoutes {
 	}
 
 	public JsonObject triggerProjectScan(RequestContext requestContext,
-        HttpServletResponse httpServletResponse) throws JSONException {
-    logger.info("Triggering project scan");
-    JsonObject response = new JsonObject();
-    
-    try {
-    	projectManager.requestScan().get();
-        response.addProperty("gatewayProjectScanSuccess", true);
-    } catch (Exception e) {
-        logger.error("Error triggering project scan", e);
-        response.addProperty("gatewayProjectScanSuccess", false);
-    }
-    
-    String updateDesigner = requestContext.getParameter("updateDesigners");
-    String forceUpdate = requestContext.getParameter("forceUpdate");
-    if (updateDesigner != null && updateDesigner.equals("true")) {
-        logger.info("Updating designer");
-        GatewaySessionManager sessionManager = gatewayContext.getGatewaySessionManager();
-        try {
-            JsonObject notificationData = new JsonObject();
-            notificationData.addProperty("forceUpdate", forceUpdate != null && forceUpdate.equals("true"));
-            sessionManager.sendNotification(ApplicationScope.DESIGNER, ProjectScanConstants.MODULE_ID, ProjectScanConstants.DESIGNER_SCAN_NOTIFICATION_ID, notificationData);
-            response.addProperty("sentDesignerUpdateNotification", true);
-        } catch (Exception e) {
-            logger.error("Error sending notification", e);
-            response.addProperty("sentDesignerUpdateNotification", false);
-        }
-    }
-    return response;
-}
+			HttpServletResponse httpServletResponse) throws JSONException {
+		logger.info("Triggering project scan");
+		JsonObject response = new JsonObject();
+
+		try {
+			projectManager.requestScan().get();
+			response.addProperty("gatewayProjectScanSuccess", true);
+		} catch (Exception e) {
+			logger.error("Error triggering project scan", e);
+			response.addProperty("gatewayProjectScanSuccess", false);
+		}
+
+		String updateDesigner = requestContext.getParameter("updateDesigners");
+		String forceUpdate = requestContext.getParameter("forceUpdate");
+		String triggerProjectUpdate = requestContext.getParameter("triggerProjectUpdate");
+		if (updateDesigner != null && updateDesigner.equals("true")) {
+			logger.info("Updating designer");
+			GatewaySessionManager sessionManager = gatewayContext.getGatewaySessionManager();
+			try {
+				JsonObject notificationData = new JsonObject();
+				notificationData.addProperty("forceUpdate", forceUpdate != null && forceUpdate.equals("true"));
+				notificationData.addProperty("triggerProjectUpdate", triggerProjectUpdate != null && triggerProjectUpdate.equals("true"));
+				sessionManager.sendNotification(ApplicationScope.DESIGNER, ProjectScanConstants.MODULE_ID,
+						ProjectScanConstants.DESIGNER_SCAN_NOTIFICATION_ID, notificationData);
+				response.addProperty("sentDesignerUpdateNotification", true);
+			} catch (Exception e) {
+				logger.error("Error sending notification", e);
+				response.addProperty("sentDesignerUpdateNotification", false);
+			}
+		}
+		return response;
+	}
 }
