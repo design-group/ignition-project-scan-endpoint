@@ -3,13 +3,13 @@ package com.bwdesigngroup.ignition.project_scan.designer.actions;
 import com.inductiveautomation.ignition.client.util.action.BaseAction;
 import com.inductiveautomation.ignition.designer.model.DesignerContext;
 import com.inductiveautomation.ignition.common.gson.JsonObject;
-import com.inductiveautomation.ignition.common.BundleUtil;
 import com.inductiveautomation.ignition.common.gson.Gson;
 import com.inductiveautomation.ignition.common.util.LoggerEx;
 import com.inductiveautomation.ignition.client.gateway_interface.ModuleRPCFactory;
 import com.bwdesigngroup.ignition.project_scan.common.ProjectScanConstants;
 import com.bwdesigngroup.ignition.project_scan.common.ProjectScanRPC;
 import com.bwdesigngroup.ignition.project_scan.designer.ProjectScanEndpointDesignerHook;
+import static com.inductiveautomation.ignition.common.BundleUtil.i18n;
 
 
 import javax.swing.Icon;
@@ -21,9 +21,9 @@ public class ProjectScanAction extends BaseAction {
     private final Gson gson = new Gson();
 
     public ProjectScanAction(DesignerContext context, Icon icon) {
-        super(BundleUtil.get().getString("projectscan.Action.ScanProject.Name"), icon);
+        super(i18n("projectscan.Action.ScanProject.Name"), icon);
         this.context = context;
-        putValue(SHORT_DESCRIPTION, BundleUtil.get().getString("projectscan.Action.ScanProject.Description"));
+        putValue(SHORT_DESCRIPTION, i18n("projectscan.Action.ScanProject.Description"));
         logger.info("Project Scan Action initialized");
     }
 

@@ -4,23 +4,48 @@ import static com.inductiveautomation.ignition.common.BundleUtil.i18n;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class ConfirmationDialog extends JDialog {
     private boolean confirmed = false;
 
     public ConfirmationDialog(Frame owner) {
-        super(owner, true);
+        // Pass owner, title, modal flag, and graphics configuration to ensure correct screen
+        super(owner, i18n("projectscan.Dialog.Title"), true, 
+              owner != null ? owner.getGraphicsConfiguration() : null);
+        
         initComponents();
+        
+        // Center on owner window and ensure visibility on correct screen
+        centerOnOwner(owner);
+    }
+
+    private void centerOnOwner(Frame owner) {
+        if (owner != null) {
+            // Get owner's screen and window bounds
+            GraphicsConfiguration gc = owner.getGraphicsConfiguration();
+            Rectangle screenBounds = gc.getBounds();
+            Rectangle ownerBounds = owner.getBounds();
+            
+            // Get our dialog's size
+            Dimension dialogSize = getSize();
+            
+            // Calculate center position relative to owner window
+            int x = ownerBounds.x + (ownerBounds.width - dialogSize.width) / 2;
+            int y = ownerBounds.y + (ownerBounds.height - dialogSize.height) / 2;
+            
+            // Ensure dialog stays within screen bounds
+            x = Math.max(screenBounds.x, Math.min(x, screenBounds.x + screenBounds.width - dialogSize.width));
+            y = Math.max(screenBounds.y, Math.min(y, screenBounds.y + screenBounds.height - dialogSize.height));
+            
+            setLocation(x, y);
+        }
     }
 
     private void initComponents() {
         setSize(325, 125);
-		setLocationRelativeTo(getParent());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
-		setTitle(i18n("projectscan.Dialog.Title"));
 
         // Icon
         ImageIcon icon = (ImageIcon) UIManager.getIcon("OptionPane.questionIcon");
@@ -36,20 +61,16 @@ public class ConfirmationDialog extends JDialog {
         add(messageLabel, BorderLayout.CENTER);
 
         // Buttons
-        JButton updateButton = new JButton( i18n("projectscan.Dialog.UpdateButton"));
-        updateButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                confirmed = true;
-                setVisible(false);
-            }
+        JButton updateButton = new JButton(i18n("projectscan.Dialog.UpdateButton"));
+        updateButton.addActionListener(e -> {
+            confirmed = true;
+            setVisible(false);
         });
 
         JButton ignoreButton = new JButton(i18n("projectscan.Dialog.IgnoreButton"));
-        ignoreButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                confirmed = false;
-                setVisible(false);
-            }
+        ignoreButton.addActionListener(e -> {
+            confirmed = false;
+            setVisible(false);
         });
 
         updateButton.setFocusPainted(false);
