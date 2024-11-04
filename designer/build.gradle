@@ -11,3 +11,12 @@ dependencies {
     compileOnly("com.inductiveautomation.ignitionsdk:ignition-common:${sdk_version}")
     compileOnly("com.inductiveautomation.ignitionsdk:designer-api:${sdk_version}")
 }
+
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}

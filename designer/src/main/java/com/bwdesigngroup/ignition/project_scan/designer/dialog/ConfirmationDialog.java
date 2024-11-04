@@ -1,5 +1,7 @@
 package com.bwdesigngroup.ignition.project_scan.designer.dialog;
 
+import static com.inductiveautomation.ignition.common.BundleUtil.i18n;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,7 +20,7 @@ public class ConfirmationDialog extends JDialog {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
-		setTitle("Update Project");
+		setTitle(i18n("projectscan.Dialog.Title"));
 
         // Icon
         ImageIcon icon = (ImageIcon) UIManager.getIcon("OptionPane.questionIcon");
@@ -27,13 +29,14 @@ public class ConfirmationDialog extends JDialog {
         add(iconLabel, BorderLayout.WEST);
 
         // Message
-        JLabel messageLabel = new JLabel("<html><div style='text-align: center;'>A new version of the project is available. <br>Would you like to update?</div></html>");
+        String message = i18n("projectscan.Dialog.Message");
+        JLabel messageLabel = new JLabel("<html><div style='text-align: center;'>" + message + "</div></html>");
         messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 10));
         messageLabel.setOpaque(false);
         add(messageLabel, BorderLayout.CENTER);
 
         // Buttons
-        JButton updateButton = new JButton("Update");
+        JButton updateButton = new JButton( i18n("projectscan.Dialog.UpdateButton"));
         updateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 confirmed = true;
@@ -41,7 +44,7 @@ public class ConfirmationDialog extends JDialog {
             }
         });
 
-        JButton ignoreButton = new JButton("Ignore");
+        JButton ignoreButton = new JButton(i18n("projectscan.Dialog.IgnoreButton"));
         ignoreButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 confirmed = false;
