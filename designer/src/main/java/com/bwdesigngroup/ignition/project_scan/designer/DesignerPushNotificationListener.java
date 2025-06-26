@@ -78,7 +78,8 @@ public class DesignerPushNotificationListener extends FilteredPushNotificationLi
 
     private Boolean showDialog() {
         ConfirmationDialog dialog = new ConfirmationDialog(IgnitionDesigner.getFrame());
-        dialog.setLocationRelativeTo(null);
+        dialog.setLocationRelativeTo(IgnitionDesigner.getFrame());
+        dialog.setAlwaysOnTop(true);
         dialog.setVisible(true);
         return dialog.isConfirmed();
     }

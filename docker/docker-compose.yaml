@@ -1,6 +1,6 @@
 services:
   gateway:
-    image: bwdesigngroup/ignition-docker:8.1.44
+    image: bwdesigngroup/ignition-docker:8.1.47
     environment:
       DEVELOPER_MODE: Y
       GATEWAY_SYSTEM_NAME: project-scan
