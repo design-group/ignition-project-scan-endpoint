@@ -14,31 +14,6 @@ public class ConfirmationDialog extends JDialog {
               owner != null ? owner.getGraphicsConfiguration() : null);
         
         initComponents();
-        
-        // Center on owner window and ensure visibility on correct screen
-        centerOnOwner(owner);
-    }
-
-    private void centerOnOwner(Frame owner) {
-        if (owner != null) {
-            // Get owner's screen and window bounds
-            GraphicsConfiguration gc = owner.getGraphicsConfiguration();
-            Rectangle screenBounds = gc.getBounds();
-            Rectangle ownerBounds = owner.getBounds();
-            
-            // Get our dialog's size
-            Dimension dialogSize = getSize();
-            
-            // Calculate center position relative to owner window
-            int x = ownerBounds.x + (ownerBounds.width - dialogSize.width) / 2;
-            int y = ownerBounds.y + (ownerBounds.height - dialogSize.height) / 2;
-            
-            // Ensure dialog stays within screen bounds
-            x = Math.max(screenBounds.x, Math.min(x, screenBounds.x + screenBounds.width - dialogSize.width));
-            y = Math.max(screenBounds.y, Math.min(y, screenBounds.y + screenBounds.height - dialogSize.height));
-            
-            setLocation(x, y);
-        }
     }
 
     private void initComponents() {
