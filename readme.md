@@ -1,3 +1,18 @@
+> # ➡️ This repository has moved
+>
+> **`design-group/ignition-project-scan-endpoint` is archived.**
+>
+> The maintained version lives in the **BW Design Group** organization:
+>
+> ### 👉 [github.com/bw-design-group/ignition-project-scan-endpoint](https://github.com/bw-design-group/ignition-project-scan-endpoint)
+>
+> That repository provides the current REST endpoint for triggering an Ignition project scan, with ongoing releases and support. Please update your bookmarks and any CI references.
+>
+> This repository is read-only and preserved for historical reference only.
+
+---
+
+<!-- Original README preserved below for reference -->
 > [!Warning]
 > **Repository moved!** This repo is **archived** and no longer updated. All future development happens here https://github.com/bw-design-group/ignition-project-scan-endpoint
 
